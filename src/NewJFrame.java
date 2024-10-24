@@ -271,7 +271,7 @@ public class NewJFrame extends javax.swing.JFrame {
         }
     }
     
-     private void tambahKotaFavorit() {
+    private void tambahKotaFavorit() {
         String city = textFieldKota.getText();
         if (!city.isEmpty() && !kotaFavorit.contains(city)) {
             kotaFavorit.add(city);
@@ -292,7 +292,7 @@ public class NewJFrame extends javax.swing.JFrame {
         }
     }
 
-   private void muatFavorit() {
+    private void muatFavorit() {
         File file = new File("kota_favorit.txt");
 
         try {
@@ -315,7 +315,6 @@ public class NewJFrame extends javax.swing.JFrame {
         }
     }
 
- 
     private String terjemahkanCuaca(String weather) {
         switch (weather.toLowerCase()) {
             case "clear":
@@ -346,8 +345,21 @@ public class NewJFrame extends javax.swing.JFrame {
         buttonCek.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String city = textFieldKota.getText();
-                if (!city.isEmpty()) {
+                String textField = textFieldKota.getText();
+                String comboBox = (String) comboBoxFavorit.getSelectedItem();
+                String city;
+                if (textField.isEmpty()) {
+                    if (!comboBox.isEmpty()) {
+                      city = comboBox;  
+                    } else {
+                      city = "null";
+                    }
+                } else {
+                  city = textField;
+                }
+                if (city.equals("null")) {
+                    JOptionPane.showMessageDialog(null, "Kota harus terisi!");
+                } else {
                     getCuaca(city);
                 }
             }
