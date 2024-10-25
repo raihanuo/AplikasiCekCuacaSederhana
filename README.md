@@ -34,7 +34,8 @@ Aplikasi ini memungkinkan pengguna untuk memeriksa cuaca di berbagai kota, menyi
 - **Data Penyimpanan:** Data cuaca dapat disimpan dan dimuat dengan mudah, memungkinkan akses di masa mendatang.
 
 ## Screenshot
-_Akan ditambahkan nanti_
+![9](https://github.com/user-attachments/assets/bae154d5-dc0e-4c99-8a62-116a33802ab6)
+![9_](https://github.com/user-attachments/assets/4e8dc996-ee3d-441c-88a8-2c520c9712e0)
 
 ## Cara Menjalankan Program
 1. **Prasyarat:**
