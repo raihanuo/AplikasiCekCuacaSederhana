@@ -7,14 +7,14 @@ Aplikasi ini memungkinkan pengguna untuk memeriksa cuaca di berbagai kota, menyi
 - NPM   : 2210010364
 - Kelas : 5B NonReg Banjarmasin
 
-## Fitur Program
+## Fitur
 - **Cek Cuaca:** Dapat memeriksa cuaca terkini berdasarkan nama kota yang dimasukkan.
 - **Kota Favorit:** Menambahkan dan menyimpan kota favorit untuk akses cepat di masa depan.
 - **Simpan Data Cuaca:** Menyimpan data cuaca yang telah diperoleh ke dalam format CSV.
 - **Muat Data Cuaca:** Memuat data cuaca yang disimpan sebelumnya dari file CSV.
 - **Terjemahan Cuaca:** Menyediakan terjemahan dalam bahasa Indonesia untuk deskripsi cuaca.
 
-## Cara Menggunakan Program
+## Cara Menggunakan
 1. **Masukkan Nama Kota:** Ketikkan nama kota yang ingin diperiksa di dalam kotak teks yang tersedia.
 2. **Pilih Kota Favorit:** Pilih kota dari dropdown jika ingin memeriksa cuaca kota favorit.
 3. **Cek Cuaca:** Klik tombol "Cek Cuaca" untuk mendapatkan informasi cuaca terkini.
@@ -28,10 +28,13 @@ Aplikasi ini memungkinkan pengguna untuk memeriksa cuaca di berbagai kota, menyi
 - **API Cuaca:** OpenWeatherMap API untuk mendapatkan data cuaca terkini
 - **Format Data:** CSV untuk menyimpan data
 
-## Keunggulan Program
+## Keunggulan
 - **User-friendly:** Antarmuka pengguna yang sederhana dan mudah digunakan.
 - **Fleksibilitas:** Pengguna dapat memilih untuk memeriksa cuaca berdasarkan kota yang dimasukkan atau dari daftar kota favorit.
 - **Data Penyimpanan:** Data cuaca dapat disimpan dan dimuat dengan mudah, memungkinkan akses di masa mendatang.
+
+## Screenshot
+_Akan ditambahkan nanti_
 
 ## Cara Menjalankan Program
 1. **Prasyarat:**
