@@ -37,11 +37,16 @@ Aplikasi ini adalah program Java berbasis GUI yang memungkinkan pengguna untuk m
 ![9_](https://github.com/user-attachments/assets/4e8dc996-ee3d-441c-88a8-2c520c9712e0)
 
 ## Cara Menjalankan Program
-1. **Prasyarat:**
+1. **Clone Repository:**
+   Clone repositori ini ke mesin lokal Anda.
+   ```bash
+   git clone https://github.com/raihanuo/AplikasiCekCuacaSederhana.git
+   
+2. **Prasyarat:**
    - Pastikan Anda memiliki JDK terinstal di sistem Anda (Java Development Kit).
    - Dapatkan API Key dari [OpenWeatherMap](https://openweathermap.org/) dan masukkan ke dalam kode program.
   
-2. **Kompilasi Program:**
+3. **Kompilasi Program:**
    - Buka terminal/command prompt.
    - Navigasikan ke direktori tempat file Java disimpan.
    - Jalankan perintah:
@@ -49,11 +54,10 @@ Aplikasi ini adalah program Java berbasis GUI yang memungkinkan pengguna untuk m
      javac NewJFrame.java
      ```
 
-3. **Jalankan Program:**
+4. **Jalankan Program:**
    - Setelah kompilasi berhasil, jalankan perintah berikut:
      ```bash
      java NewJFrame
      ```
 
-4. **Nikmati Aplikasi:** Aplikasi akan terbuka, dan Anda dapat mulai memeriksa cuaca!
-
+5. **Nikmati Aplikasi:** Aplikasi akan terbuka, dan Anda dapat mulai memeriksa cuaca!
