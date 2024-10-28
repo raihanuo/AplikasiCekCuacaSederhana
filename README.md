@@ -1,6 +1,6 @@
 # Aplikasi Cek Cuaca Sederhana
 
-Aplikasi ini memungkinkan pengguna untuk memeriksa cuaca di berbagai kota, menyimpan data cuaca, dan menambahkan kota favorit.
+Aplikasi ini adalah program Java berbasis GUI yang memungkinkan pengguna untuk memeriksa cuaca di berbagai kota, memuat data cuaca dari file, menyimpan data cuaca ke file, dan menambahkan kota favorit.
 
 ## Identitas
 - Nama  : Muhammad Raihan
@@ -12,21 +12,20 @@ Aplikasi ini memungkinkan pengguna untuk memeriksa cuaca di berbagai kota, menyi
 - **Kota Favorit:** Menambahkan dan menyimpan kota favorit untuk akses cepat di masa depan.
 - **Simpan Data Cuaca:** Menyimpan data cuaca yang telah diperoleh ke dalam format CSV.
 - **Muat Data Cuaca:** Memuat data cuaca yang disimpan sebelumnya dari file CSV.
-- **Terjemahan Cuaca:** Menyediakan terjemahan dalam bahasa Indonesia untuk deskripsi cuaca.
 
 ## Cara Menggunakan
-1. **Masukkan Nama Kota:** Ketikkan nama kota yang ingin diperiksa di dalam kotak teks yang tersedia.
-2. **Pilih Kota Favorit:** Pilih kota dari dropdown jika ingin memeriksa cuaca kota favorit.
-3. **Cek Cuaca:** Klik tombol "Cek Cuaca" untuk mendapatkan informasi cuaca terkini.
-4. **Tambah ke Favorit:** Klik tombol "Tambah Favorit" untuk menyimpan kota yang telah diperiksa ke daftar favorit.
-5. **Simpan Data:** Klik tombol "Simpan Data" untuk menyimpan informasi cuaca yang telah diperoleh ke dalam file CSV.
-6. **Muat Data:** Klik tombol "Muat Data" untuk memuat data cuaca dari file CSV yang telah disimpan sebelumnya.
+1. Ketikkan nama kota yang ingin diperiksa di dalam kotak teks yang tersedia.
+2. Pilih kota dari dropdown jika ingin memeriksa cuaca kota favorit.
+3. Klik tombol "Cek Cuaca" untuk mendapatkan informasi cuaca terkini.
+4. Klik tombol "Tambah Favorit" untuk menyimpan kota yang telah diperiksa ke daftar favorit.
+5. Klik tombol "Simpan Data" untuk menyimpan informasi cuaca yang telah diperoleh ke dalam file CSV.
+6. Klik tombol "Muat Data" untuk memuat data cuaca dari file CSV yang telah disimpan sebelumnya.
 
 ## Teknologi yang Digunakan
-- **Bahasa Pemrograman:** Java
-- **Framework GUI:** Swing
-- **API Cuaca:** OpenWeatherMap API untuk mendapatkan data cuaca terkini
-- **Format Data:** CSV untuk menyimpan data
+- **Java**: Bahasa pemrograman untuk mengembangkan aplikasi.
+- **Swing**: Framework GUI untuk membangun antarmuka pengguna.
+- **API:** OpenWeatherMap API untuk mendapatkan data cuaca terkini
+- **CSV**: Format file untuk ekspor dan impor data kontak.
 
 ## Keunggulan
 - **User-friendly:** Antarmuka pengguna yang sederhana dan mudah digunakan.
