@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,14 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONObject;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-
 /**
  *
  * @author USER
@@ -37,7 +34,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         
-        start();
+        start(); // Memanggil metode start untuk melakukan pengaturan awal dan menyiapkan event listener
     }
     
     ArrayList<String> kotaFavorit = new ArrayList<>();;
@@ -188,107 +185,107 @@ public class NewJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void simpanDataCuaca() {
-        try (FileWriter writer = new FileWriter("data_cuaca.csv", true)) {
-            DefaultTableModel tableModel = (DefaultTableModel) tableCuaca.getModel();
-            for (int i = 0; i < tableModel.getRowCount(); i++) {
-                String city = tableModel.getValueAt(i, 0).toString();
-                String weather = tableModel.getValueAt(i, 1).toString();
-                String temp = tableModel.getValueAt(i, 2).toString();
-                writer.append(city).append(",").append(weather).append(",").append(temp).append("\n");
+        try (FileWriter writer = new FileWriter("data_cuaca.csv", true)) { // Membuka FileWriter untuk menulis data cuaca ke file CSV
+            DefaultTableModel tableModel = (DefaultTableModel) tableCuaca.getModel(); // Mengambil model tabel dari komponen GUI
+            for (int i = 0; i < tableModel.getRowCount(); i++) { // Iterasi melalui semua baris tabel
+                String city = tableModel.getValueAt(i, 0).toString(); // Mendapatkan nama kota dari kolom pertama
+                String weather = tableModel.getValueAt(i, 1).toString(); // Mendapatkan cuaca dari kolom kedua
+                String temp = tableModel.getValueAt(i, 2).toString(); // Mendapatkan suhu dari kolom ketiga
+                writer.append(city).append(",").append(weather).append(",").append(temp).append("\n"); // Menulis data ke file
             }
-            JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke CSV");
+            JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke CSV"); // Menampilkan pesan sukses
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Menangani pengecualian IO
         }
     }
     
     private void muatDataCuaca() {
         File file = new File("data_cuaca.csv");
-    
+
         try {
-            if (!file.exists()) {
-                file.createNewFile();
+            if (!file.exists()) { // Memeriksa apakah file ada
+                file.createNewFile(); // Membuat file baru jika tidak ada
                 try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
-                    writer.println("Kota,Cuaca,Suhu (°C)");
+                    writer.println("Kota,Cuaca,Suhu (°C)"); // Menulis header untuk file CSV
                 }
-                JOptionPane.showMessageDialog(this, "File data_cuaca.csv berhasil dibuat.");
+                JOptionPane.showMessageDialog(this, "File data_cuaca.csv berhasil dibuat."); // Menampilkan pesan sukses
             }
 
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                DefaultTableModel tableModel = (DefaultTableModel) tableCuaca.getModel();
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) { // Membaca data dari file CSV
+                DefaultTableModel tableModel = (DefaultTableModel) tableCuaca.getModel(); // Mengambil model tabel
                 String line;
-                tableModel.setRowCount(0);
-                while ((line = reader.readLine()) != null) {
-                    String[] data = line.split(",");
-                    tableModel.addRow(data);
+                tableModel.setRowCount(0); // Menghapus semua baris yang ada di tabel
+                while ((line = reader.readLine()) != null) { // Membaca setiap baris
+                    String[] data = line.split(","); // Memisahkan data berdasarkan koma
+                    tableModel.addRow(data); // Menambahkan baris ke model tabel
                 }
-                JOptionPane.showMessageDialog(this, "Data berhasil dimuat dari CSV");
+                JOptionPane.showMessageDialog(this, "Data berhasil dimuat dari CSV"); // Menampilkan pesan sukses
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Menangani pengecualian IO
         }
     }
     
     private void getCuaca(String city) {
-        String apiKey = "042ec8689a1d1dfaba84af0c6e14d088";
-        String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
-        
-        try {
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.connect();
-            
-            int responseCode = conn.getResponseCode();
-            if (responseCode == 200) {
-                InputStream inputStream = conn.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-                
-                JSONObject json = new JSONObject(stringBuilder.toString());
-                String weather = json.getJSONArray("weather").getJSONObject(0).getString("main");
-                String icon = json.getJSONArray("weather").getJSONObject(0).getString("icon");
-                double temp = json.getJSONObject("main").getDouble("temp");
-                
-                String translatedWeather = terjemahkanCuaca(weather);
-                labelCuaca.setText("Cuaca : " + translatedWeather + " (" + temp + "°C)");
-                
-                String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
-                ImageIcon iconImage = new ImageIcon(new URL(iconUrl));
-                labelIkon.setIcon(iconImage);
+        String apiKey = "042ec8689a1d1dfaba84af0c6e14d088"; // Kunci API untuk OpenWeatherMap
+        String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric"; // URL untuk meminta data cuaca
 
-                DefaultTableModel tableModel = (DefaultTableModel) tableCuaca.getModel();
-                tableModel.addRow(new Object[]{city, translatedWeather, temp});
+        try {
+            URL url = new URL(urlString); // Membuat objek URL dari string
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection(); // Membuka koneksi HTTP
+            conn.setRequestMethod("GET"); // Mengatur metode permintaan ke GET
+            conn.connect(); // Melakukan koneksi
+
+            int responseCode = conn.getResponseCode(); // Mendapatkan kode respons
+            if (responseCode == 200) { // Memeriksa apakah permintaan berhasil
+                InputStream inputStream = conn.getInputStream(); // Mendapatkan aliran input dari koneksi
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)); // Membaca data dari aliran input
+                StringBuilder stringBuilder = new StringBuilder(); // Membuat StringBuilder untuk menyimpan data
+                String line;
+                while ((line = reader.readLine()) != null) { // Membaca setiap baris
+                    stringBuilder.append(line); // Menambahkan baris ke StringBuilder
+                }
+
+                JSONObject json = new JSONObject(stringBuilder.toString()); // Mengonversi string menjadi objek JSON
+                String weather = json.getJSONArray("weather").getJSONObject(0).getString("main"); // Mendapatkan kondisi cuaca
+                String icon = json.getJSONArray("weather").getJSONObject(0).getString("icon"); // Mendapatkan ikon cuaca
+                double temp = json.getJSONObject("main").getDouble("temp"); // Mendapatkan suhu
+
+                String translatedWeather = terjemahkanCuaca(weather); // Menerjemahkan kondisi cuaca
+                labelCuaca.setText("Cuaca : " + translatedWeather + " (" + temp + "°C)"); // Menampilkan kondisi cuaca di label
+
+                String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png"; // URL ikon cuaca
+                ImageIcon iconImage = new ImageIcon(new URL(iconUrl)); // Membuat objek ImageIcon dari URL
+                labelIkon.setIcon(iconImage); // Mengatur ikon cuaca di label
+
+                DefaultTableModel tableModel = (DefaultTableModel) tableCuaca.getModel(); // Mengambil model tabel
+                tableModel.addRow(new Object[]{city, translatedWeather, temp}); // Menambahkan data cuaca ke tabel
             } else {
-                labelCuaca.setText("Kota tidak ditemukan.");
+                labelCuaca.setText("Kota tidak ditemukan."); // Menampilkan pesan jika kota tidak ditemukan
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Menangani pengecualian
         }
     }
     
     private void tambahKotaFavorit() {
-        String city = textFieldKota.getText();
-        if (!city.isEmpty() && !kotaFavorit.contains(city)) {
-            kotaFavorit.add(city);
-            comboBoxFavorit.addItem(city);
-            JOptionPane.showMessageDialog(this, "Kota " + city + " ditambahkan ke favorit.");
+        String city = textFieldKota.getText(); // Mendapatkan nama kota dari text field
+        if (!city.isEmpty() && !kotaFavorit.contains(city)) { // Memeriksa apakah kota tidak kosong dan belum ada di daftar favorit
+            kotaFavorit.add(city); // Menambahkan kota ke daftar favorit
+            comboBoxFavorit.addItem(city); // Menambahkan kota ke combo box favorit
+            JOptionPane.showMessageDialog(this, "Kota " + city + " ditambahkan ke favorit."); // Menampilkan pesan sukses
         } else if (kotaFavorit.contains(city)) {
-            JOptionPane.showMessageDialog(this, "Kota " + city + " sudah ada di favorit.");
+            JOptionPane.showMessageDialog(this, "Kota " + city + " sudah ada di favorit."); // Menampilkan pesan jika kota sudah ada
         }
     }
     
     private void simpanFavorit() {
-        try (FileWriter writer = new FileWriter("kota_favorit.txt")) {
+        try (FileWriter writer = new FileWriter("kota_favorit.txt")) { // Membuka FileWriter untuk menyimpan kota favorit
             for (String city : kotaFavorit) {
-                writer.write(city + "\n");
+                writer.write(city + "\n"); // Menulis setiap kota ke file
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Menangani pengecualian IO
         }
     }
 
@@ -296,27 +293,27 @@ public class NewJFrame extends javax.swing.JFrame {
         File file = new File("kota_favorit.txt");
 
         try {
-            if (!file.exists()) {
-                file.createNewFile();
-                JOptionPane.showMessageDialog(this, "File kota_favorit.txt berhasil dibuat.");
+            if (!file.exists()) { // Memeriksa apakah file favorit ada
+                file.createNewFile(); // Membuat file baru jika tidak ada
+                JOptionPane.showMessageDialog(this, "File kota_favorit.txt berhasil dibuat."); // Menampilkan pesan sukses
             }
 
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) { // Membaca data dari file kota favorit
                 String line;
-                kotaFavorit.clear();
-                comboBoxFavorit.removeAllItems();
-                while ((line = reader.readLine()) != null) {
-                    kotaFavorit.add(line);
-                    comboBoxFavorit.addItem(line);
+                kotaFavorit.clear(); // Menghapus daftar kota favorit yang ada
+                comboBoxFavorit.removeAllItems(); // Menghapus semua item dari combo box
+                while ((line = reader.readLine()) != null) { // Membaca setiap baris
+                    kotaFavorit.add(line); // Menambahkan kota ke daftar favorit
+                    comboBoxFavorit.addItem(line); // Menambahkan kota ke combo box favorit
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Menangani pengecualian IO
         }
     }
 
     private String terjemahkanCuaca(String weather) {
-        switch (weather.toLowerCase()) {
+        switch (weather.toLowerCase()) { // Menerjemahkan kondisi cuaca ke bahasa Indonesia
             case "clear":
                 return "Cerah";
             case "clouds":
@@ -332,57 +329,57 @@ public class NewJFrame extends javax.swing.JFrame {
             case "mist":
                 return "Kabut";
             default:
-                return weather;
+                return weather; // Mengembalikan kondisi cuaca asli jika tidak ada terjemahan
         }
     }
     
     private void start() {
-        muatFavorit();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+        muatFavorit(); // Memuat daftar kota favorit saat aplikasi dimulai
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> { // Menambahkan hook untuk menyimpan favorit saat aplikasi ditutup
             simpanFavorit();
         }));
-        
-        buttonCek.addActionListener(new ActionListener() {
+
+        buttonCek.addActionListener(new ActionListener() { // Menambahkan aksi untuk tombol cek cuaca
             @Override
             public void actionPerformed(ActionEvent e) {
-                String textField = textFieldKota.getText();
-                String comboBox = (String) comboBoxFavorit.getSelectedItem();
+                String textField = textFieldKota.getText(); // Mendapatkan nama kota dari text field
+                String comboBox = (String) comboBoxFavorit.getSelectedItem(); // Mendapatkan kota dari combo box favorit
                 String city;
-                if (textField.isEmpty()) {
+                if (textField.isEmpty()) { // Memeriksa apakah text field kosong
                     if (!comboBox.isEmpty()) {
-                      city = comboBox;  
+                        city = comboBox; // Menggunakan kota dari combo box jika text field kosong
                     } else {
-                      city = "null";
+                        city = "null"; // Menandai jika tidak ada kota
                     }
                 } else {
-                  city = textField;
+                    city = textField; // Menggunakan nama kota dari text field
                 }
-                if (city.equals("null")) {
-                    JOptionPane.showMessageDialog(null, "Kota harus terisi!");
+                if (city.equals("null")) { // Memeriksa apakah kota kosong
+                    JOptionPane.showMessageDialog(null, "Kota harus terisi!"); // Menampilkan pesan kesalahan
                 } else {
-                    getCuaca(city);
+                    getCuaca(city); // Mendapatkan data cuaca untuk kota
                 }
             }
         });
-        
-        buttonFavorit.addActionListener(new ActionListener() {
+
+        buttonFavorit.addActionListener(new ActionListener() { // Menambahkan aksi untuk tombol tambah kota favorit
             @Override
             public void actionPerformed(ActionEvent e) {
-                tambahKotaFavorit();
+                tambahKotaFavorit(); // Memanggil metode untuk menambahkan kota favorit
+            }
+        });
+
+        buttonSimpan.addActionListener(new ActionListener() { // Menambahkan aksi untuk tombol simpan data cuaca
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                simpanDataCuaca(); // Memanggil metode untuk menyimpan data cuaca
             }
         });
         
-        buttonSimpan.addActionListener(new ActionListener() {
+        buttonMuat.addActionListener(new ActionListener() { // Menambahkan aksi untuk tombol muat data cuaca
             @Override
             public void actionPerformed(ActionEvent e) {
-                simpanDataCuaca();
-            }
-        });
-        
-        buttonMuat.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                muatDataCuaca();
+                muatDataCuaca(); // Memanggil metode untuk memuat data cuaca
             }
         });
     }
