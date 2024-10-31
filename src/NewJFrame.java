@@ -6,6 +6,7 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -338,29 +339,47 @@ public class NewJFrame extends javax.swing.JFrame {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> { // Menambahkan hook untuk menyimpan favorit saat aplikasi ditutup
             simpanFavorit();
         }));
+        
+        // Mendapatkan item yang dipilih dari comboBoxFavorit
+        String comboBox = (String) comboBoxFavorit.getSelectedItem();
 
-        buttonCek.addActionListener(new ActionListener() { // Menambahkan aksi untuk tombol cek cuaca
+        // Mengecek apakah item yang dipilih tidak kosong
+        if (!comboBox.isEmpty()) {
+            // Memanggil metode getCuaca dengan parameter item yang dipilih
+            getCuaca(comboBox);
+        }
+
+        // Menambahkan ItemListener pada comboBoxFavorit
+        comboBoxFavorit.addItemListener(e -> {
+            // Mengecek apakah state dari event adalah SELECTED (item dipilih)
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                // Mendapatkan item yang dipilih sebagai kota
+                String city = (String) comboBoxFavorit.getSelectedItem();
+                // Memanggil metode getCuaca dengan kota yang dipilih
+                getCuaca(city);
+            }
+        });
+
+        // Menambahkan ActionListener pada buttonCek
+        buttonCek.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String textField = textFieldKota.getText(); // Mendapatkan nama kota dari text field
-                String comboBox = (String) comboBoxFavorit.getSelectedItem(); // Mendapatkan kota dari combo box favorit
-                String city;
-                if (textField.isEmpty()) { // Memeriksa apakah text field kosong
-                    if (!comboBox.isEmpty()) {
-                        city = comboBox; // Menggunakan kota dari combo box jika text field kosong
-                    } else {
-                        city = "null"; // Menandai jika tidak ada kota
-                    }
-                } else {
-                    city = textField; // Menggunakan nama kota dari text field
-                }
-                if (city.equals("null")) { // Memeriksa apakah kota kosong
-                    JOptionPane.showMessageDialog(null, "Kota harus terisi!"); // Menampilkan pesan kesalahan
-                } else {
-                    getCuaca(city); // Mendapatkan data cuaca untuk kota
+                // Mendapatkan teks dari textFieldKota
+                String textField = textFieldKota.getText();
+                // Mendapatkan item yang dipilih dari comboBoxFavorit
+                String comboBox = (String) comboBoxFavorit.getSelectedItem();
+
+                // Mengecek apakah textFieldKota tidak kosong
+                if (!textField.isEmpty()) {
+                    // Memanggil metode getCuaca dengan parameter dari textFieldKota
+                    getCuaca(textField);
+                } else if (comboBox.isEmpty()) {
+                    // Menampilkan pesan error jika kedua input kosong
+                    JOptionPane.showMessageDialog(null, "Kota harus terisi!");
                 }
             }
         });
+
 
         buttonFavorit.addActionListener(new ActionListener() { // Menambahkan aksi untuk tombol tambah kota favorit
             @Override
